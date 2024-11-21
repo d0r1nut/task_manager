@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-5">
+    {% if task_id != null %}
+        <h1 class="mb-4">Edit Task {{task_id}}</h1>
+        <form class="needs-validation" novalidate method="POST" id="task-form" action="{% url 'edit_task' task_id %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" name="description" value="{{task.description}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="createdByUid" class="form-label">Created By Uid</label>
+                <input type="text" class="form-control" id="createdByUid" name="createdByUid" value="{{task.createdByUid}}" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="createdByName" class="form-label">Created By Name</label>
+                <input type="text" class="form-control" id="createdByName" name="createdByName" value="{{task.createdByName}}" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="assignedToUid" class="form-label">Assigned To Uid</label>
+                <input type="text" class="form-control" id="assignedToUid" name="assignedToUid" value="{{task.assignedToUid}}" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="assignedToName" class="form-label">Assigned To Name</label>
+                <input type="text" class="form-control" id="assignedToName" name="assignedToName" value="{{task.assignedToName}}" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="done" class="form-label">Done</label>
+                <input type="text" class="form-control" id="done" name="done" value="{{task.done}}" required>
+            </div>
+            <input type="hidden" name="id" value="{{task_id}}">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    {% else %}
+        <h1 class="mb-4">Add a New Task</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" name="description" required>
+                <label for="assignedToUid" class="form-label">Assigned To Uid</label>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="user-select">Assign To</label>
+                    <select class="form-select" id="user-select" name="assignedToUid">
+                      {% for userr in users %}
+                        <option value="{{userr.id}}">{{userr.name}}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

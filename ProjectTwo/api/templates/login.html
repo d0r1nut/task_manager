@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10 text-center">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">Login</h1>
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for field in form %}
+                                    {% if field.errors %}
+                                        <li>{{ field.label }}: {{ field.errors|join:", " }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                          <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>
+                            <button type="submit" class="btn btn-primary me-md-2">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

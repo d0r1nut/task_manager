@@ -1,0 +1,56 @@
+{% extends 'index.html' %} 
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              {% if created_by == True %}
+                <h1>All Tasks Created By Me</h1>
+              {% else %}
+                <h1>All Tasks Assigned To Me</h1>
+              {% endif %}
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Description</th>
+                            <th>Created By Uid</th>
+                            <th>Created By Name</th>
+                            <th>Assigned To Uid</th>
+                            <th>Assigned To Name</th>
+                            <th>Done</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{task.id}}</td>
+                                <td>{{task.description}}</td>
+                                <td>{{task.createdByUid}}</td>
+                                <td>{{task.createdByName}}</td>
+                                <td>{{task.assignedToUid}}</td>
+                                <td>{{task.assignedToName}}</td>
+                                <td>{{task.done}}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="">
+                                      {% if user.id == task.assignedToUid %}
+                                        <a href="{% url 'edit_task' task.id %}" class="btn btn-primary">Edit</a>
+                                      {% else %}
+                                        <a href="{% url 'edit_task' task.id %}" class="btn btn-primary disabled">Edit</a>  
+                                      {% endif %}
+                                        <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title mb-4">Sign Up</h1>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                              <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+                              <button type="submit" class="btn btn-primary me-md-2" onclick="return checkPasswordsMatch()">Sign Up</button>
+                              <script>
+                                function checkPasswordsMatch() {
+                                  var password = document.getElementById("password").value;
+                                  var confirmPassword = document.getElementById("confirm_password").value;
+                                  if (password !== confirmPassword) {
+                                    alert("Passwords do not match.");
+                                    return false;
+                                  }
+                                  return true;
+                                }
+                              </script>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
